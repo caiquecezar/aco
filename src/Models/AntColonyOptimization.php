@@ -2,26 +2,49 @@
 
 namespace Aco\Models;
 
-use Aco\Models\Objective;
 use Aco\Models\Node;
 use Aco\Models\Path;
 use Exception;
 
 abstract class AntColonyOptimization
 {
+    /**
+     * Constants to error messages.
+     */
     const INVALID_NODES = 'This node list is not valid.';
     const ERROR_TO_FIND_NEXT_NODE = 'Error: cannot find next node to visit.';
 
+    /** 
+     * All Nodes.
+     * 
+     * A Node is a partial solution.
+     * 
+     * This is a mapped variable (["id" => Node])
+     */
     private array $nodes;
-    private float $evaporationFee;
-    private float $initialPheromone;
+
+    /**
+     * Pheromone.
+     */
+    private Pheromone $pheromone;
+
+    /**
+     * All paths.
+     * 
+     * A path is identified by 2 Nodes
+     * 
+     * Array of Path
+     */
     private array $paths;
+
+    /**
+     * Total number of ants.
+     */
     private int $totalAnts;
 
     public function __construct(
         array $nodes,
-        float $evaporationFee,
-        int $initialPheromone,
+        Pheromone $pheromone,
         int $totalAnts,
     ) {
         foreach ($nodes as $node) {
@@ -29,15 +52,18 @@ abstract class AntColonyOptimization
                 throw new Exception(self::INVALID_NODES);
             }
         }
+
         $this->nodes = $this->mapNodes($nodes);
 
         $this->paths = $this->makePaths();
 
-        $this->evaporationFee = $evaporationFee;
-        $this->initialPheromone = $initialPheromone;
+        $this->pheromone = $pheromone;
         $this->totalAnts = $totalAnts;
     }
 
+    /**
+     * Executes the Ant Colony Optimization
+     */
     public function run(int $initialPosition = -1)
     {
         $bestSolution = [];
@@ -45,30 +71,30 @@ abstract class AntColonyOptimization
 
         for ($i = 0; $i < $this->totalAnts; $i++) {
             $solution = $this->releaseAnt($initialPosition);
-            $solutionValue = $this->calculateSolutionObjectiveValue($solution);
+            $solutionValue = $solution->calculateObjective();
 
-            if ($solutionValue > $bestSolutionValue) {
+            if ($solution->calculateObjective > $bestSolutionValue) {
                 $bestSolution = $solution;
                 $bestSolutionValue = $solutionValue;
             }
 
-            $solutionPheromoneIncrease = $this->calculatePheromoneIncreaseValue($solutionValue);
-            $this->updatePheromone($solution, $solutionPheromoneIncrease);
+            $this->updatePheromone($solution->getNodes(), $solutionValue);
         }
 
         return $bestSolution;
     }
 
 
-    private function updatePheromone(array $solution = [], int $solutionPheromoneIncrease = 0)
+    private function updatePheromone(array $solution, float $solutionValue)
     {
         for ($i = 0; $i < sizeOf($solution) - 1; $i++) {
             $initialNode = $solution[$i];
-            $finalNode = $solution[$i+1];
+            $finalNode = $solution[$i + 1];
 
-            $path = $this->findPath($initialNode->getId(), $finalNode->getId());
             foreach ($this->paths as $path) {
-                $path->increasePheromone($solutionPheromoneIncrease);
+                if ($path->isCurrentPath($initialNode, $finalNode)) {
+                    $path->increasePheromone($solutionValue);
+                }
             }
         }
 
@@ -77,6 +103,9 @@ abstract class AntColonyOptimization
         }
     }
 
+    /**
+     * Build all pairs nodes paths.
+     */
     private function makePaths(): array
     {
         $paths = [];
@@ -85,7 +114,7 @@ abstract class AntColonyOptimization
             $adjList = $node->getAdjList();
 
             foreach ($adjList as $adjNode) {
-                $path = new Path($node->getId(), $adjNode, $this->initialPheromone, $this->evaporationFee);
+                $path = new Path($node->getId(), $adjNode, $this->pheromone);
 
                 array_push($paths, $path);
             }
@@ -94,7 +123,10 @@ abstract class AntColonyOptimization
         return $paths;
     }
 
-    private function releaseAnt(int $actualPosition = -1)
+    /**
+     * Release the ant into paths to get a solution
+     */
+    private function releaseAnt(int $actualPosition = -1): Solution
     {
         $solution = [];
         $tempSolution = [];
@@ -103,12 +135,22 @@ abstract class AntColonyOptimization
         do {
             $solution = $tempSolution;
             $visited[] = $actualPosition;
-            array_push($tempSolution, $this->getNextNode($actualPosition, $visited));
+            $nextNodeToVisit = $this->getNextNode($actualPosition, $visited);
+
+            if (!$nextNodeToVisit) {
+                break;
+            }
+
+            array_push($tempSolution, $nextNodeToVisit);
+            $actualPosition = $nextNodeToVisit->getId();
         } while ($this->verifyStopCondition($tempSolution));
 
-        return $solution;
+        return new Solution($solution);
     }
 
+    /**
+     * Map nodes ["nodeId" => Node]
+     */
     private function mapNodes(array $nodes): array
     {
         $mappedNodes = [];
@@ -120,7 +162,12 @@ abstract class AntColonyOptimization
         return $mappedNodes;
     }
 
-    private function getNextNode(int $actualNodeId, array $visited)
+    /**
+     * The ant goes to next node.
+     * 
+     * @throw Exception
+     */
+    private function getNextNode(int $actualNodeId, array $visited): null|Node
     {
         if ($actualNodeId === -1) {
             $firstNodeId = array_rand($this->nodes, 1);
@@ -133,38 +180,29 @@ abstract class AntColonyOptimization
         $adjNodes = $actualNode->getAdjList();
         $notVisitedNodes = array_intersect($adjNodes, $visited);
 
-        if (!$adjNodes || !$notVisitedNodes) {
+        if (!$notVisitedNodes) {
             return null;
         }
 
-        /** id => pheromone */
+        /** NodeId => pheromone (to path actualNode >> notVisitedNode) */
         $mappedPheromones = [];
-        foreach ($this->paths as $path) {
-            foreach ($notVisitedNodes as $notVisitedNode) {
-                if ($path->verifyPath($actualNodeId, $notVisitedNode)) {
-                    $potentialNode = $this->nodes[$notVisitedNode];
-                    $mappedPheromones[$notVisitedNode] = $potentialNode->getPheromone();
-                }
+        foreach ($notVisitedNodes as $notVisitedNode) {
+            $path = $this->findPath($actualNodeId, $notVisitedNode);
+            if ($path) {
+                $mappedPheromones[$notVisitedNode] = $path->getPheromone();
             }
         }
-        $total = 0;
-        foreach ($mappedPheromones as $mappedPheromone) {
-            $total += $mappedPheromone;
-        }
-        $randValue = rand(0, ceil($total));
-        foreach ($mappedPheromones as $nodeId => $mappedPheromone) {
-            $randValue -= $mappedPheromone;
-            if ($randValue <= 0) {
-                return $this->nodes[$nodeId];
-            }
-        }
-        throw new Exception(self::ERROR_TO_FIND_NEXT_NODE);
+
+        return $this->findNextNodeFollowingPheromone($mappedPheromones);
     }
 
-    private function findPath(int $initialNode, int $finalNode)
+    /**
+     * Find the Path between two nodes.
+     */
+    private function findPath(int $initialNode, int $finalNode): Path
     {
         foreach ($this->paths as $path) {
-            $pathSearched = $path->verifyPath($initialNode, $finalNode);
+            $pathSearched = $path->isCurrentPath($initialNode, $finalNode);
 
             if ($pathSearched) {
                 return $path;
@@ -174,9 +212,34 @@ abstract class AntColonyOptimization
         return false;
     }
 
+    /**
+     * Given an array of pheromones, find randomically a next node to visit.
+     */
+    private function findNextNodeFollowingPheromone(array $mappedPheromones): false|Node
+    {
+        $potentialNodesTotalPheromone = 0;
+        foreach ($mappedPheromones as $mappedPheromone) {
+            $potentialNodesTotalPheromone += $mappedPheromone;
+        }
+
+        /** Use a random value to chose next node.
+         * 
+         * The most pheromone a path to node have, bigger the chance of the node been chosen.
+         */
+        $randValue = rand(0, ceil($potentialNodesTotalPheromone));
+
+        foreach ($mappedPheromones as $nodeId => $mappedPheromone) {
+            $randValue -= $mappedPheromone;
+            if ($randValue <= 0) {
+                return $this->nodes[$nodeId];
+            }
+        }
+
+        throw new Exception(self::ERROR_TO_FIND_NEXT_NODE);
+    }
+
+    /**
+     * Function to verify the stop condition when building a solution.
+     */
     abstract protected function verifyStopCondition(array $solution): bool;
-
-    abstract protected function calculatePheromoneIncreaseValue(int $objectiveReached): int;
-
-    protected abstract function calculateSolutionObjectiveValue(array $solution): int;
 }

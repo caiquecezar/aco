@@ -6,34 +6,37 @@ class Path
 {
     private int $initialNode;
     private int $finalNode;
-    private float $evaporationFee;
-    private float $pheromone;
+    private int $currentPheromone;
+    private Pheromone $pheromone;
 
-    public function __construct(int $initialNode, int $finalNode, int $initialPheromone, float $evaporationFee)
+    public function __construct(int $initialNode, int $finalNode, Pheromone $pheromone)
     {
         $this->initialNode = $initialNode;
         $this->finalNode = $finalNode;
-        $this->pheromone = $initialPheromone;
-        $this->evaporationFee = $evaporationFee;
+        $this->pheromone = $pheromone;
+        $this->currentPheromone = $this->pheromone->getInitialPheromone();
     }
 
     public function evapore(): void
     {
-        $this->pheromone = $this->pheromone - ($this->pheromone * $this->evaporationFee);
+        $this->currentPheromone = $this->currentPheromone - ($this->currentPheromone * $this->pheromone->getEvaporationFee());
     }
 
-    public function verifyPath(int $initalNode, int $finalNode): bool
+    /**
+     * Verify if the current path is build from $initialNode and $finalNode
+     */
+    public function isCurrentPath(int $initalNode, int $finalNode): bool
     {
         return $this->initialNode === $initalNode && $this->finalNode === $finalNode;
     }
 
-    public function increasePheromone(int $value)
+    public function increasePheromone(int $solutionValue)
     {
-        $this->pheromone += $value;
+        $this->currentPheromone += $this->pheromone->calculatePheromoneIncreaseValue($solutionValue);
     }
 
     public function getPheromone()
     {
-        return $this->pheromone;
+        return $this->currentPheromone;
     }
 }
