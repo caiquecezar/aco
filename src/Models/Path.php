@@ -19,7 +19,7 @@ class Path
 
     public function evapore(): void
     {
-        $this->currentPheromone = $this->currentPheromone - ($this->currentPheromone * $this->pheromone->getEvaporationFee());
+        $this->currentPheromone = (int) $this->currentPheromone - ($this->currentPheromone * $this->pheromone->getEvaporationFee());
     }
 
     /**

@@ -7,9 +7,9 @@ abstract class Solution
     /**
      * Array of Aco\Models\Nodes that build a valid solution. 
      */
-    private array $nodes;
+    protected array $nodes;
 
-    public function __construct(array $nodes)
+    public function __construct(array $nodes = [])
     {
         $this->nodes = $nodes;
     }
@@ -20,6 +20,13 @@ abstract class Solution
     public function getNodes(): array
     {
         return $this->nodes;
+    }
+
+    public function buildSolution(array $nodes): Solution
+    {
+        $concreteClass = get_class($this);
+
+        return new $concreteClass($nodes);
     }
 
     /**

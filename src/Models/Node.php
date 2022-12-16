@@ -2,7 +2,7 @@
 
 namespace Aco\Models;
 
-use Aco\Helpers\AutoIncrement;
+use Aco\Helpers\Concrete\AutoIncrement;
 
 abstract class Node
 {
@@ -33,12 +33,17 @@ abstract class Node
         return $this->adjList;
     }
 
-    public function getId()
+    public function setAdjList(array $adjList): void
+    {
+        $this->adjList = $adjList;
+    }
+
+    public function getId(): int
     {
         return $this->id;
     }
 
-    private function setId()
+    private function setId(): void
     {
         $autoIncrement = AutoIncrement::getInstance();
 

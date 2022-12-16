@@ -1,10 +1,10 @@
 <?php
 
-namespace Aco\Helpers;
+namespace Aco\Helpers\Concrete;
 
-abstract class AutoIncrement
+class AutoIncrement
 {
-    private AutoIncrement $instance;
+    private static ?AutoIncrement $instance = null;
     private int $id;
 
     public function __construct()

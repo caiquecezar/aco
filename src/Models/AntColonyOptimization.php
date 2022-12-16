@@ -4,10 +4,13 @@ namespace Aco\Models;
 
 use Aco\Models\Node;
 use Aco\Models\Path;
+use Aco\Helpers\Traits\AdjListBuilder;
 use Exception;
 
 abstract class AntColonyOptimization
 {
+    use AdjListBuilder;
+
     /**
      * Constants to error messages.
      */
@@ -42,29 +45,39 @@ abstract class AntColonyOptimization
      */
     private int $totalAnts;
 
+    /**
+     * Solution concrete class to be used in algorithm
+     */
+    private Solution $solution;
+
     public function __construct(
         array $nodes,
         Pheromone $pheromone,
         int $totalAnts,
+        Solution $solution,
+        bool $buildAdjList = true
     ) {
         foreach ($nodes as $node) {
-            if (gettype($node) !== Node::class) {
+            if (!is_subclass_of($node, Node::class)) {
                 throw new Exception(self::INVALID_NODES);
             }
         }
 
-        $this->nodes = $this->mapNodes($nodes);
-
-        $this->paths = $this->makePaths();
-
         $this->pheromone = $pheromone;
         $this->totalAnts = $totalAnts;
+        $this->solution = $solution;
+
+        $this->nodes = $this->mapNodes($nodes);
+        if ($buildAdjList) {
+            $this->nodes = $this->buildAdjList($this->nodes);
+        }
+        $this->paths = $this->makePaths();
     }
 
     /**
      * Executes the Ant Colony Optimization
      */
-    public function run(int $initialPosition = -1)
+    public function run(int $initialPosition = -1): Solution
     {
         $bestSolution = [];
         $bestSolutionValue = 0;
@@ -73,7 +86,7 @@ abstract class AntColonyOptimization
             $solution = $this->releaseAnt($initialPosition);
             $solutionValue = $solution->calculateObjective();
 
-            if ($solution->calculateObjective > $bestSolutionValue) {
+            if ($solutionValue > $bestSolutionValue) {
                 $bestSolution = $solution;
                 $bestSolutionValue = $solutionValue;
             }
@@ -81,18 +94,22 @@ abstract class AntColonyOptimization
             $this->updatePheromone($solution->getNodes(), $solutionValue);
         }
 
+        if (!$bestSolution) {
+            throw new Exception('Unable to find a solution.');
+        }
+
         return $bestSolution;
     }
 
 
-    private function updatePheromone(array $solution, float $solutionValue)
+    private function updatePheromone(array $solution, float $solutionValue): void
     {
         for ($i = 0; $i < sizeOf($solution) - 1; $i++) {
             $initialNode = $solution[$i];
             $finalNode = $solution[$i + 1];
 
             foreach ($this->paths as $path) {
-                if ($path->isCurrentPath($initialNode, $finalNode)) {
+                if ($path->isCurrentPath($initialNode->getId(), $finalNode->getId())) {
                     $path->increasePheromone($solutionValue);
                 }
             }
@@ -116,10 +133,10 @@ abstract class AntColonyOptimization
             foreach ($adjList as $adjNode) {
                 $path = new Path($node->getId(), $adjNode, $this->pheromone);
 
-                array_push($paths, $path);
+                $paths[] = $path;
             }
         }
-
+        
         return $paths;
     }
 
@@ -145,7 +162,7 @@ abstract class AntColonyOptimization
             $actualPosition = $nextNodeToVisit->getId();
         } while ($this->verifyStopCondition($tempSolution));
 
-        return new Solution($solution);
+        return $this->solution->buildSolution($solution);
     }
 
     /**
@@ -178,7 +195,7 @@ abstract class AntColonyOptimization
 
         $actualNode = $this->nodes[$actualNodeId];
         $adjNodes = $actualNode->getAdjList();
-        $notVisitedNodes = array_intersect($adjNodes, $visited);
+        $notVisitedNodes = array_diff($adjNodes, $visited);
 
         if (!$notVisitedNodes) {
             return null;
@@ -202,6 +219,7 @@ abstract class AntColonyOptimization
     private function findPath(int $initialNode, int $finalNode): Path
     {
         foreach ($this->paths as $path) {
+            
             $pathSearched = $path->isCurrentPath($initialNode, $finalNode);
 
             if ($pathSearched) {

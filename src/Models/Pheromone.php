@@ -23,5 +23,5 @@ abstract class Pheromone
         return $this->evaporationFee;
     }
 
-    abstract public function calculatePheromoneIncreaseValue(float $objectiveReached): float;
+    abstract public function calculatePheromoneIncreaseValue(float $objectiveReached): int;
 }
