@@ -11,12 +11,6 @@ abstract class AntColonyOptimization
 {
     use AdjListBuilder;
 
-    /**
-     * Constants to error messages.
-     */
-    const INVALID_NODES = 'This node list is not valid.';
-    const ERROR_TO_FIND_NEXT_NODE = 'Error: cannot find next node to visit.';
-
     /** 
      * All Nodes.
      * 
@@ -59,7 +53,7 @@ abstract class AntColonyOptimization
     ) {
         foreach ($nodes as $node) {
             if (!is_subclass_of($node, Node::class)) {
-                throw new Exception(self::INVALID_NODES);
+                throw new InvalidNodesException();
             }
         }
 
@@ -86,7 +80,7 @@ abstract class AntColonyOptimization
             $solution = $this->releaseAnt($initialPosition);
             $solutionValue = $solution->calculateObjective();
 
-            if ($solutionValue > $bestSolutionValue) {
+            if ($solutionValue >= $bestSolutionValue) {
                 $bestSolution = $solution;
                 $bestSolutionValue = $solutionValue;
             }
@@ -253,7 +247,7 @@ abstract class AntColonyOptimization
             }
         }
 
-        throw new Exception(self::ERROR_TO_FIND_NEXT_NODE);
+        throw new NextNodeNotFoundException();
     }
 
     /**
