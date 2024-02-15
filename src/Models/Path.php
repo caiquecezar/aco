@@ -30,7 +30,7 @@ class Path
         return $this->initialNode === $initalNode && $this->finalNode === $finalNode;
     }
 
-    public function increasePheromone(int $solutionValue)
+    public function increasePheromone(float $solutionValue)
     {
         $this->currentPheromone += $this->pheromone->calculatePheromoneIncreaseValue($solutionValue);
     }
