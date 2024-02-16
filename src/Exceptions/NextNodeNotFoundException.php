@@ -1,6 +1,6 @@
 <?php
 
-namespace Aco\Models;
+namespace Aco\Exceptions;
 
 use Exception;
 

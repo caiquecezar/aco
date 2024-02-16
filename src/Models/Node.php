@@ -4,6 +4,10 @@ namespace Aco\Models;
 
 use Aco\Helpers\Concrete\AutoIncrement;
 
+/**
+ * This is an abstract class. 
+ * It doesnt have any abstract method but should be adapted for your problem context.
+ */
 abstract class Node
 {
     /**
@@ -14,19 +18,17 @@ abstract class Node
     /**
      * Array of adjacent nodes ids.
      */
-    private array $adjList;
+    private array $adjList = [];
 
-    public function __construct(array $adjList)
+    public function __construct()
     {
         $this->setId();
-        $this->visited = [];
-        $this->adjList = $adjList;
     }
 
     /**
-     * List of nodes that can be visited after actual node
+     * Retrieves the list of nodes that can be visited after the current node.
      * 
-     * Array of Integer (NodesIds)
+     * @return array An array containing the IDs of the adjacent nodes.
      */
     public function getAdjList(): array
     {

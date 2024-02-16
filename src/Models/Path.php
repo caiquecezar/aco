@@ -2,6 +2,9 @@
 
 namespace Aco\Models;
 
+/**
+ * Class Path represents the path between two adjacents nodes.
+ */
 class Path
 {
     private int $initialNode;
@@ -23,7 +26,11 @@ class Path
     }
 
     /**
-     * Verify if the current path is build from $initialNode and $finalNode
+     * Checks if the current path is built from the specified initial and final nodes.
+     * 
+     * @param int $initialNode The ID of the initial node of the path.
+     * @param int $finalNode The ID of the final node of the path.
+     * @return bool Returns true if the current path matches the specified initial and final nodes, false otherwise.
      */
     public function isCurrentPath(int $initalNode, int $finalNode): bool
     {

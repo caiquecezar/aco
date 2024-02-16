@@ -2,6 +2,11 @@
 
 namespace Aco\Models;
 
+/**
+ * This is an abstract class. 
+ * It has methods that are specific for each problem.
+ * Calibrate the abstract method to get better solutions.
+ */
 abstract class Pheromone
 {
     private int $initialPheromone;
@@ -23,5 +28,10 @@ abstract class Pheromone
         return $this->evaporationFee;
     }
 
+    /**
+     * Calculates the increase pheromone according with $objectiveReached.
+     * 
+     * This is an abstract function, its implementation is specific for each problem
+     */
     abstract public function calculatePheromoneIncreaseValue(float $objectiveReached): int;
 }
