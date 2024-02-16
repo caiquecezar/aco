@@ -139,11 +139,13 @@ abstract class AntColonyOptimization
         foreach ($this->nodes as $node) {
             /** @var Node $node */
             $adjList = $node->getAdjList();
-
+            $currentNodeId = $node->getId();
             foreach ($adjList as $adjNode) {
-                $path = new Path($node->getId(), $adjNode, $this->pheromone);
-
-                $paths[] = $path;
+                $path = new Path($currentNodeId, $adjNode, $this->pheromone);
+                $reversePath = new Path($adjNode, $currentNodeId, $this->pheromone);
+                if (!in_array($reversePath, $paths)) {
+                    $paths[] = $path;
+                }
             }
         }
 
@@ -164,10 +166,12 @@ abstract class AntColonyOptimization
             $initialNode = $solution[$i];
             /** @var Node $finalNode */
             $finalNode = $solution[$i + 1];
-
+            $initialNodeId = $initialNode->getId();
+            $finalNodeId = $finalNode->getId();
             foreach ($this->paths as $path) {
                 /** @var Path $path */
-                if ($path->isCurrentPath($initialNode->getId(), $finalNode->getId())) {
+                $pathShouldIncreasePheromone = $path->isCurrentPath($initialNodeId, $finalNodeId) || $path->isCurrentPath($finalNodeId, $initialNodeId);
+                if ($pathShouldIncreasePheromone) {
                     $path->increasePheromone($solutionValue);
                 }
             }
@@ -272,7 +276,7 @@ abstract class AntColonyOptimization
     {
         foreach ($this->paths as $path) {
             /** @var Path $path*/
-            $pathSearched = $path->isCurrentPath($initialNode, $finalNode);
+            $pathSearched = $path->isCurrentPath($initialNode, $finalNode) || $path->isCurrentPath($finalNode, $initialNode);
 
             if ($pathSearched) {
                 return $path;

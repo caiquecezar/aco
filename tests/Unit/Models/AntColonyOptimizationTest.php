@@ -67,7 +67,7 @@ class AntColonyOptimizationTest extends TestCase
 
         $paths = $atributo->getValue($aco);
 
-        $this->assertCount(6, $paths);
+        $this->assertCount(3, $paths);
     }
 
     public function testRunThrowsPathsNotFoundExceptionWhenNoPathsAvailable()
