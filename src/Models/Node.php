@@ -2,7 +2,7 @@
 
 namespace Aco\Models;
 
-use Aco\Helpers\Concrete\AutoIncrement;
+use Aco\Helpers\AutoIncrement;
 
 /**
  * This is an abstract class. 

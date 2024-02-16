@@ -1,6 +1,6 @@
 <?php
 
-namespace Aco\Helpers\Concrete;
+namespace Aco\Helpers;
 
 class AutoIncrement
 {
