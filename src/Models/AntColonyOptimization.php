@@ -86,6 +86,7 @@ abstract class AntColonyOptimization
         $this->nodes = $this->mapNodes($nodes);
         if ($buildAdjList) {
             $this->nodes = $this->buildAdjList($this->nodes);
+            // TODO: improve this logic to use create bidirectional edges
             $this->makePaths();
         }
     }
