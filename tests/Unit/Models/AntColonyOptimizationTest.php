@@ -14,8 +14,6 @@ use Tests\Utils\Traits\CreateDefaultImpl;
 
 class AntColonyOptimizationTest extends TestCase
 {
-    use CreateDefaultImpl;
-
     public function testAntColonyOptimizationCanBeConstructed()
     {
         $nodes = [
