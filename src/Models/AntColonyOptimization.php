@@ -8,7 +8,7 @@ use Aco\Exceptions\PathsNotFoundException;
 use Aco\Exceptions\SolutionNotFoundException;
 use Aco\Models\Node;
 use Aco\Models\Path;
-use Aco\Helpers\Traits\AdjListBuilder;
+use Aco\Utils\Traits\AdjListBuilder;
 
 /**
  * This is an abstract class. 

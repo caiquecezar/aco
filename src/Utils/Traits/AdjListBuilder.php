@@ -1,6 +1,6 @@
 <?php
 
-namespace Aco\Helpers\Traits;
+namespace Aco\Utils\Traits;
 
 trait AdjListBuilder
 {
