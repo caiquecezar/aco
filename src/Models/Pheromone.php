@@ -9,8 +9,8 @@ namespace Aco\Models;
  */
 abstract class Pheromone
 {
-    private int $initialPheromone;
-    private float $evaporationFee;
+    protected int $initialPheromone;
+    protected float $evaporationFee;
 
     public function __construct(int $initialPheromone, float $evaporationFee)
     {

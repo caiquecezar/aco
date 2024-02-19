@@ -27,7 +27,7 @@ class Context
         if ($currentNodeId === -1) {
             $firstNodeId = array_rand($this->nodes->getNodes(), 1);
 
-            return $this->nodes[$firstNodeId];
+            return $this->nodes->getNodeById($firstNodeId);
         }
 
         $notVisitedNodes = $this->nodes->getNotVisitedFrom($currentNodeId, $visited);
@@ -44,15 +44,5 @@ class Context
     public function updatePathsPheromone(array $solution, float $solutionValue): void
     {
         $this->edges->updatePheromone($solution, $solutionValue);
-    }
-
-    public function logall(): void
-    {
-        foreach ($this->nodes as $n) {
-            $id = $n->getId();
-            $l = $n->getLevel();
-            var_dump("{$id}: {$l}");
-        }
-        $this->edges->logphero();
     }
 }

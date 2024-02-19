@@ -22,7 +22,9 @@ class Path
 
     public function evapore(): void
     {
-        $this->currentPheromone = (int) $this->currentPheromone - ($this->currentPheromone * $this->pheromone->getEvaporationFee());
+        $decrease = (int) floor($this->currentPheromone * $this->pheromone->getEvaporationFee());
+
+        $this->currentPheromone = max($this->currentPheromone - $decrease, 1);
     }
 
     /**
@@ -44,6 +46,6 @@ class Path
 
     public function getPheromone()
     {
-        return $this->currentPheromone;
+        return max($this->currentPheromone, 1);
     }
 }

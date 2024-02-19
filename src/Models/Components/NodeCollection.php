@@ -3,15 +3,19 @@
 namespace Aco\Models\Components;
 
 use Aco\Models\Node;
+use Aco\Utils\Traits\CheckNodes;
 
 class NodeCollection
 {
+    use CheckNodes;
+
     private array $nodes;
 
     public function __construct(array $nodes)
     {
+        $this->checkNodes($nodes);
+    
         foreach ($nodes as $node) {
-            //TODO: não é node exception
             $this->addNode($node);
         }
     }

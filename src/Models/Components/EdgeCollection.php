@@ -5,13 +5,18 @@ namespace Aco\Models\Components;
 use Aco\Exceptions\NextNodeNotFoundException;
 use Aco\Models\Node;
 use Aco\Models\Path;
+use Aco\Utils\Traits\CheckPaths;
 
 class EdgeCollection
 {
+    use CheckPaths;
+
     private array $paths;
 
     public function __construct(array $paths)
     {
+        $this->checkPaths($paths);
+    
         foreach ($paths as $path) {
             $this->addPath($path);
         }
@@ -60,13 +65,17 @@ class EdgeCollection
         for ($i = 0; $i < sizeOf($solution) - 1; $i++) {
             /** @var Node $initialNode */
             $initialNode = $solution[$i];
+
             /** @var Node $finalNode */
             $finalNode = $solution[$i + 1];
+
             $initialNodeId = $initialNode->getId();
             $finalNodeId = $finalNode->getId();
+
             foreach ($this->paths as $path) {
                 /** @var Path $path */
                 $pathShouldIncreasePheromone = $path->isCurrentPath($initialNodeId, $finalNodeId) || $path->isCurrentPath($finalNodeId, $initialNodeId);
+
                 if ($pathShouldIncreasePheromone) {
                     $path->increasePheromone($solutionValue);
                 }
@@ -76,14 +85,6 @@ class EdgeCollection
         foreach ($this->paths as $path) {
             /** @var Path $path */
             $path->evapore();
-        }
-    }
-
-
-    public function logphero(): void
-    {
-        foreach ($this->paths as $p) {
-            $p->loginfo();
         }
     }
 
@@ -101,6 +102,7 @@ class EdgeCollection
         $mappedPheromones = [];
         foreach ($toNodes as $toNode) {
             $path = $this->findPath($fromNode, $toNode);
+
             if ($path) {
                 $mappedPheromones[$toNode] = $path->getPheromone();
             }
@@ -119,6 +121,7 @@ class EdgeCollection
 
         foreach ($mappedPheromones as $nodeId => $mappedPheromone) {
             $randValue -= $mappedPheromone;
+
             if ($randValue <= 0) {
                 return $nodeId;
             }
