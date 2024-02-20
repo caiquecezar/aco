@@ -39,7 +39,7 @@ class AntColonyOptimization
 
         for ($i = 0; $i < $this->totalAnts; $i++) {
             $solution = $this->context->releaseAnt($initialPosition);
-
+            
             if (!$solution->isValidSolution()) {
                 continue;
             }

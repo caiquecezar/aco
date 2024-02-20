@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Utils\Concretes\Default;
+namespace Tests\Utils\Concretes\Solutions;
 
 use Aco\Components\Abstracts\Solution;
 
-class SolutionImpl extends Solution
+class SolutionImpl2Nodes extends Solution
 {
     public function calculateObjective(): float
     {
@@ -13,6 +13,6 @@ class SolutionImpl extends Solution
 
     public function isValidSolution(): bool
     {
-        return true;
+        return count($this->nodes) == 2;
     }
 }

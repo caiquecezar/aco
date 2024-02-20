@@ -54,15 +54,10 @@ class Context
 
             $nodeId = $this->edges->findNextNodeFollowingPheromone($currentNodeId, $notVisitedNodes);
             $nextNodeToVisit = $this->nodes->getNodeById($nodeId);
-
-            if (!$nextNodeToVisit) {
-                return $tempSolution;
-            }
-
             $tempSolution->addPartialSolution($nextNodeToVisit);
 
-            $visited[] = $nextNodeToVisit->getId();
-            $actualPosition = $nextNodeToVisit->getId();
+            $currentNodeId = $nextNodeToVisit->getId();
+            $visited[] = $currentNodeId;
         }
 
         return $tempSolution;
