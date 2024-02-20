@@ -48,12 +48,17 @@ class NodeCollection
 
     /**
      * Retrieves a node by its ID.
+     * If id is invalid, return a random Node.
      *
      * @param int $id The ID of the node to retrieve.
      * @return Node The node with the specified ID.
      */
     public function getNodeById(int $id): Node
     {
+        if ($id < 0) {
+            return $this->nodes[array_rand($this->nodes, 1)];
+        }
+
         return $this->nodes[$id];
     }
 

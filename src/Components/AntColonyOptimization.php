@@ -3,14 +3,12 @@
 namespace Aco\Components;
 
 use Aco\Components\Abstracts\Solution;
-use Aco\Components\Factories\SolutionFactory;
 use Aco\Exceptions\SolutionNotFoundException;
 
 class AntColonyOptimization
 {
     private Context $context;
     private int $totalAnts;
-    private string $solutionClass;
 
     /**
      * Constructor for AntColonyOptimization class.
@@ -22,11 +20,9 @@ class AntColonyOptimization
     public function __construct(
         Context $context,
         int $totalAnts,
-        string $solution,
     ) {
         $this->context = $context;
         $this->totalAnts = $totalAnts;
-        $this->solutionClass = $solution;
     }
 
     /**
@@ -42,7 +38,12 @@ class AntColonyOptimization
         $bestSolutionValue = null;
 
         for ($i = 0; $i < $this->totalAnts; $i++) {
-            $solution = $this->releaseAnt($initialPosition);
+            $solution = $this->context->releaseAnt($initialPosition);
+
+            if (!$solution->isValidSolution()) {
+                continue;
+            }
+
             $solutionValue = $solution->calculateObjective();
 
             if (!$bestSolutionValue || $solutionValue >= $bestSolutionValue) {
@@ -58,33 +59,5 @@ class AntColonyOptimization
         }
 
         return $bestSolution;
-    }
-
-
-    /**
-     * Releases an ant into paths to explore and find a solution.
-     * 
-     * @param int $actualPosition The starting position of the ant. Default is -1.
-     * @return Solution The solution obtained by the ant after exploring paths.
-     */
-    private function releaseAnt(int $actualPosition = -1): Solution
-    {
-        $tempSolution = SolutionFactory::createSolution($this->solutionClass);
-        $visited = [];
-
-        do {
-            $nextNodeToVisit = $this->context->getNextNode($actualPosition, $visited);
-
-            if (!$nextNodeToVisit) {
-                break;
-            }
-
-            $tempSolution->addPartialSolution($nextNodeToVisit);
-
-            $visited[] = $nextNodeToVisit->getId();
-            $actualPosition = $nextNodeToVisit->getId();
-        } while (!$tempSolution->isValidSolution());
-
-        return $tempSolution;
     }
 }

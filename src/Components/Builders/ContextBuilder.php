@@ -9,14 +9,16 @@ use Aco\Components\Context;
 use Aco\Components\Path;
 use Aco\Exceptions\ContextNodesNotFoundException;
 use Aco\Exceptions\ContextPathsNotFoundException;
+use Aco\Exceptions\ContextSolutionClassNotFoundException;
 use Aco\Utils\Traits\CheckNodes;
 
 class ContextBuilder
 {
     use CheckNodes;
 
-    private NodeCollection $nodes;
-    private EdgeCollection $edges;
+    private ?NodeCollection $nodes = null;
+    private ?EdgeCollection $edges = null;
+    private ?string $solutionClass = null;
 
     /**
      * Creates a new instance of ContextBuilder.
@@ -134,7 +136,24 @@ class ContextBuilder
             throw new ContextPathsNotFoundException();
         }
 
-        return new Context($this->nodes, $this->edges);
+        if (!$this->solutionClass) {
+            throw new ContextSolutionClassNotFoundException();
+        }
+
+        return new Context($this->nodes, $this->edges, $this->solutionClass);
+    }
+
+    /**
+     * Adds a concrete Solution class string.
+     *
+     * @param string $solutionClass An solution class.
+     * @return ContextBuilder The updated ContextBuilder.
+     */
+    public function addSolution(string $solutionClass): ContextBuilder
+    {
+        $this->solutionClass = $solutionClass;
+
+        return $this;
     }
 
     /**
