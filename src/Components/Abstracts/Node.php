@@ -1,6 +1,6 @@
 <?php
 
-namespace Aco\Models;
+namespace Aco\Components\Abstracts;
 
 use Aco\Utils\AutoIncrement;
 

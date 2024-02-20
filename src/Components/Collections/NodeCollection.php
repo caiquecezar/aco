@@ -1,8 +1,8 @@
 <?php
 
-namespace Aco\Models\Components;
+namespace Aco\Components\Collections;
 
-use Aco\Models\Node;
+use Aco\Components\Abstracts\Node;
 use Aco\Utils\Traits\CheckNodes;
 
 class NodeCollection

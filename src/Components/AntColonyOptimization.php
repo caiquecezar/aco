@@ -1,10 +1,10 @@
 <?php
 
-namespace Aco\Models;
+namespace Aco\Components;
 
+use Aco\Components\Abstracts\Solution;
+use Aco\Components\Factories\SolutionFactory;
 use Aco\Exceptions\SolutionNotFoundException;
-use Aco\Models\Components\Factories\SolutionFactory;
-use Aco\Models\Components\Context;
 
 class AntColonyOptimization
 {

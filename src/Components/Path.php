@@ -1,6 +1,8 @@
 <?php
 
-namespace Aco\Models;
+namespace Aco\Components;
+
+use Aco\Components\Abstracts\Pheromone;
 
 /**
  * Class Path represents the path between two adjacent nodes.

@@ -2,8 +2,8 @@
 
 namespace Aco\Utils\Traits;
 
+use Aco\Components\Path;
 use Aco\Exceptions\VariableIsNotAPathException;
-use Aco\Models\Path;
 
 trait CheckPaths
 {

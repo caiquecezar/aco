@@ -1,15 +1,14 @@
 <?php
 
-namespace Aco\Models\Components\Builders;
+namespace Aco\Components\Builders;
 
+use Aco\Components\Abstracts\Pheromone;
+use Aco\Components\Collections\EdgeCollection;
+use Aco\Components\Collections\NodeCollection;
+use Aco\Components\Context;
+use Aco\Components\Path;
 use Aco\Exceptions\ContextNodesNotFoundException;
 use Aco\Exceptions\ContextPathsNotFoundException;
-use Aco\Models\Components\Context;
-use Aco\Models\Components\EdgeCollection;
-use Aco\Models\Components\NodeCollection;
-use Aco\Models\Node;
-use Aco\Models\Path;
-use Aco\Models\Pheromone;
 use Aco\Utils\Traits\CheckNodes;
 
 class ContextBuilder

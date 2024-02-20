@@ -1,10 +1,10 @@
 <?php
 
-namespace Aco\Models\Components;
+namespace Aco\Components\Collections;
 
+use Aco\Components\Abstracts\Node;
+use Aco\Components\Path;
 use Aco\Exceptions\NextNodeNotFoundException;
-use Aco\Models\Node;
-use Aco\Models\Path;
 use Aco\Utils\Traits\CheckPaths;
 
 class EdgeCollection

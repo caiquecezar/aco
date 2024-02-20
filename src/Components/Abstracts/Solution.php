@@ -1,6 +1,6 @@
 <?php
 
-namespace Aco\Models;
+namespace Aco\Components\Abstracts;
 
 /**
  * This is an abstract class representing a solution in the Ant Colony Optimization algorithm.

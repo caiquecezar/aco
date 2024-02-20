@@ -1,8 +1,10 @@
 <?php
 
-namespace Aco\Models\Components;
+namespace Aco\Components;
 
-use Aco\Models\Node;
+use Aco\Components\Abstracts\Node;
+use Aco\Components\Collections\EdgeCollection;
+use Aco\Components\Collections\NodeCollection;
 
 class Context
 {

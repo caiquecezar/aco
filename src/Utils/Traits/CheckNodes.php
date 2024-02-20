@@ -2,8 +2,8 @@
 
 namespace Aco\Utils\Traits;
 
+use Aco\Components\Abstracts\Node;
 use Aco\Exceptions\VariableIsNotANodeException;
-use Aco\Models\Node;
 
 trait CheckNodes
 {

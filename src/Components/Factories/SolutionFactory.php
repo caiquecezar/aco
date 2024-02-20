@@ -1,9 +1,9 @@
 <?php
 
-namespace Aco\Models\Components\Factories;
+namespace Aco\Components\Factories;
 
+use Aco\Components\Abstracts\Solution;
 use Aco\Exceptions\ClassIsNotASolutionInstanceException;
-use Aco\Models\Solution;
 use Aco\Exceptions\InvalidSolutionTypeException;
 
 class SolutionFactory
