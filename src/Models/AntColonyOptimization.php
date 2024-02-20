@@ -9,17 +9,16 @@ use Aco\Models\Components\Context;
 class AntColonyOptimization
 {
     private Context $context;
-
-    /**
-     * Total number of ants.
-     */
     private int $totalAnts;
-
-    /**
-     * Solution concrete class to be used in algorithm
-     */
     private string $solutionClass;
 
+    /**
+     * Constructor for AntColonyOptimization class.
+     * 
+     * @param Context $context The context for the optimization algorithm.
+     * @param int $totalAnts The total number of ants to be used in the algorithm.
+     * @param string $solution The solution concrete class to be used in the algorithm.
+     */
     public function __construct(
         Context $context,
         int $totalAnts,
@@ -75,11 +74,11 @@ class AntColonyOptimization
 
         do {
             $nextNodeToVisit = $this->context->getNextNode($actualPosition, $visited);
-            
+
             if (!$nextNodeToVisit) {
                 break;
             }
-            
+
             $tempSolution->addPartialSolution($nextNodeToVisit);
 
             $visited[] = $nextNodeToVisit->getId();

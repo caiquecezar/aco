@@ -13,20 +13,36 @@ class EdgeCollection
 
     private array $paths;
 
+    /**
+     * EdgeCollection constructor.
+     *
+     * @param array $paths An array of paths to initialize the EdgeCollection.
+     */
     public function __construct(array $paths)
     {
         $this->checkPaths($paths);
-    
+
         foreach ($paths as $path) {
             $this->addPath($path);
         }
     }
 
+    /**
+     * Adds a path to the collection.
+     *
+     * @param Path $path The path to add.
+     * @return void
+     */
     public function addPath(Path $path): void
     {
         $this->paths[] = $path;
     }
 
+    /**
+     * Retrieves all paths in the collection.
+     *
+     * @return array All paths in the collection.
+     */
     public function getPaths(): array
     {
         return $this->paths;
@@ -93,8 +109,9 @@ class EdgeCollection
      * 
      * The method may throw a NextNodeNotFoundException if it fails to find a suitable node.
      * 
-     * @param array $mappedPheromones The mapped pheromones.
-     * @return Node|false The next node to visit, or false if no node is found.
+     * @param int $fromNode The ID of the current node.
+     * @param array $toNodes An array of IDs representing the nodes to choose from.
+     * @return int The ID of the next node to visit.
      * @throws NextNodeNotFoundException If no suitable node is found.
      */
     public function findNextNodeFollowingPheromone(int $fromNode, array $toNodes): int

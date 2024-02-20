@@ -5,24 +5,22 @@ namespace Aco\Models;
 use Aco\Utils\AutoIncrement;
 
 /**
- * This is an abstract class. 
- * It doesnt have any abstract method but should be adapted for your problem context.
+ * This is an abstract class representing a node in a graph.
+ * It doesn't have any abstract method but should be adapted for your problem context.
  */
 abstract class Node
 {
-    /**
-     * Node id.
-     */
     private int $id;
-
-    /**
-     * Array of adjacent nodes ids.
-     */
     private array $adjList = [];
 
+    /**
+     * Constructor for the Node class.
+     */
     public function __construct()
     {
-        $this->setId();
+        $autoIncrement = AutoIncrement::getInstance();
+
+        $this->id = $autoIncrement->nextId();
     }
 
     /**
@@ -35,20 +33,24 @@ abstract class Node
         return $this->adjList;
     }
 
+    /**
+     * Sets the list of adjacent nodes.
+     * 
+     * @param array $adjList An array containing the IDs of adjacent nodes.
+     * @return void
+     */
     public function setAdjList(array $adjList): void
     {
         $this->adjList = $adjList;
     }
 
+    /**
+     * Retrieves the ID of the node.
+     * 
+     * @return int The ID of the node.
+     */
     public function getId(): int
     {
         return $this->id;
-    }
-
-    private function setId(): void
-    {
-        $autoIncrement = AutoIncrement::getInstance();
-
-        $this->id = $autoIncrement->nextId();
     }
 }

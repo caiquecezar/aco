@@ -4,10 +4,16 @@ namespace Aco\Utils\Traits;
 
 use Aco\Exceptions\VariableIsNotANodeException;
 use Aco\Models\Node;
-use Exception;
 
 trait CheckNodes
 {
+    /**
+     * Checks if the elements in the given array are instances of Node.
+     * 
+     * @param array $nodes An array of elements to check.
+     * @throws VariableIsNotANodeException If any element in the array is not an instance of Node.
+     * @return void
+     */
     private function checkNodes(array $nodes): void
     {
         foreach ($nodes as $node) {

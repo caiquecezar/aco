@@ -9,6 +9,12 @@ class Context
     private NodeCollection $nodes;
     private EdgeCollection $edges;
 
+    /**
+     * Context constructor.
+     *
+     * @param NodeCollection $nodes Collection of nodes in the context.
+     * @param EdgeCollection $edges Collection of edges in the context.
+     */
     public function __construct(NodeCollection $nodes, EdgeCollection $edges)
     {
         $this->nodes = $nodes;
@@ -18,7 +24,7 @@ class Context
     /**
      * Retrieves the next node to be visited by the ant.
      *
-     * @param int $actualNodeId The ID of the current node.
+     * @param int $currentNodeId The ID of the current node.
      * @param array $visited An array containing IDs of nodes already visited.
      * @return Node|null The next node to be visited, or null if no more nodes are available.
      */
@@ -41,6 +47,13 @@ class Context
         return $this->nodes->getNodeById($nodeId);
     }
 
+    /**
+     * Update the pheromone levels of the paths based on the given solution.
+     *
+     * @param array $solution An array representing the solution found by the ant.
+     * @param float $solutionValue The value of the solution.
+     * @return void
+     */
     public function updatePathsPheromone(array $solution, float $solutionValue): void
     {
         $this->edges->updatePheromone($solution, $solutionValue);

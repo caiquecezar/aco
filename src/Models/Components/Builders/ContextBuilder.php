@@ -11,7 +11,6 @@ use Aco\Models\Node;
 use Aco\Models\Path;
 use Aco\Models\Pheromone;
 use Aco\Utils\Traits\CheckNodes;
-use Exception;
 
 class ContextBuilder
 {
@@ -20,11 +19,22 @@ class ContextBuilder
     private NodeCollection $nodes;
     private EdgeCollection $edges;
 
+    /**
+     * Creates a new instance of ContextBuilder.
+     *
+     * @return ContextBuilder A new instance of ContextBuilder.
+     */
     public static function builder(): ContextBuilder
     {
         return new ContextBuilder();
     }
 
+    /**
+     * Adds a NodeCollection to the builder.
+     *
+     * @param NodeCollection $nodes The NodeCollection to add.
+     * @return ContextBuilder The updated ContextBuilder.
+     */
     public function addNodes(NodeCollection $nodes): ContextBuilder
     {
         $this->nodes = $nodes;
@@ -32,10 +42,17 @@ class ContextBuilder
         return $this;
     }
 
+    /**
+     * Adds nodes from an array to the builder.
+     *
+     * @param array $nodes An array of nodes to add.
+     * @param bool $auto Indicates whether to automatically build adjacency lists for the nodes. Defaults to true.
+     * @return ContextBuilder The updated ContextBuilder.
+     */
     public function addNodesFromArray(array $nodes, bool $auto = true): ContextBuilder
     {
         $this->checkNodes($nodes);
-    
+
         if ($auto) {
             $nodes = $this->buildAdjList($nodes);
         }
@@ -45,6 +62,12 @@ class ContextBuilder
         return $this;
     }
 
+    /**
+     * Creates paths between nodes using the provided pheromone.
+     *
+     * @param Pheromone $pheromone The pheromone to use for creating paths.
+     * @return ContextBuilder The updated ContextBuilder.
+     */
     public function createPaths(Pheromone $pheromone): ContextBuilder
     {
         $paths = [];
@@ -69,6 +92,12 @@ class ContextBuilder
         return $this;
     }
 
+    /**
+     * Adds an EdgeCollection to the builder.
+     *
+     * @param EdgeCollection $edges The EdgeCollection to add.
+     * @return ContextBuilder The updated ContextBuilder.
+     */
     public function addPaths(EdgeCollection $edges): ContextBuilder
     {
         $this->edges = $edges;
@@ -76,6 +105,12 @@ class ContextBuilder
         return $this;
     }
 
+    /**
+     * Adds paths from an array to the builder.
+     *
+     * @param array $paths An array of paths to add.
+     * @return ContextBuilder The updated ContextBuilder.
+     */
     public function addPathsFromArray(array $paths): ContextBuilder
     {
         $this->edges = new EdgeCollection($paths);
@@ -83,6 +118,13 @@ class ContextBuilder
         return $this;
     }
 
+    /**
+     * Builds the Context object using the provided nodes and edges.
+     *
+     * @return Context The built Context object.
+     * @throws ContextNodesNotFoundException If nodes are not provided.
+     * @throws ContextPathsNotFoundException If paths are not provided.
+     */
     public function build(): Context
     {
         if (!$this->nodes) {
@@ -92,11 +134,11 @@ class ContextBuilder
         if (!$this->edges) {
             throw new ContextPathsNotFoundException();
         }
-        
+
         return new Context($this->nodes, $this->edges);
     }
 
-        /**
+    /**
      * Builds a default Adjacent List for nodes, representing all pairs of paths.
      * 
      * This method iterates over the given array of nodes and assigns to each node 
