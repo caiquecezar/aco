@@ -4,9 +4,9 @@ namespace Aco\Exceptions;
 
 use Exception;
 
-class PathsNotFoundException extends Exception
+class ContextPathsNotFoundException extends Exception
 {
-    const PATHS_NOT_FOUND = 'Paths not found.';
+    const PATHS_NOT_FOUND = 'Context paths not found.';
 
     public function __construct()
     {

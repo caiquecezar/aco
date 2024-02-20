@@ -2,6 +2,8 @@
 
 namespace Aco\Models\Components\Builders;
 
+use Aco\Exceptions\ContextNodesNotFoundException;
+use Aco\Exceptions\ContextPathsNotFoundException;
 use Aco\Models\Components\Context;
 use Aco\Models\Components\EdgeCollection;
 use Aco\Models\Components\NodeCollection;
@@ -83,8 +85,12 @@ class ContextBuilder
 
     public function build(): Context
     {
-        if (!$this->nodes || !$this->edges) {
-            throw new Exception("Precisa dos nos e arestas");
+        if (!$this->nodes) {
+            throw new ContextNodesNotFoundException();
+        }
+
+        if (!$this->edges) {
+            throw new ContextPathsNotFoundException();
         }
         
         return new Context($this->nodes, $this->edges);

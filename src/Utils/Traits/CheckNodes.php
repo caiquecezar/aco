@@ -2,6 +2,7 @@
 
 namespace Aco\Utils\Traits;
 
+use Aco\Exceptions\VariableIsNotANodeException;
 use Aco\Models\Node;
 use Exception;
 
@@ -11,7 +12,7 @@ trait CheckNodes
     {
         foreach ($nodes as $node) {
             if (!($node instanceof Node)) {
-                throw new Exception("Não é node");
+                throw new VariableIsNotANodeException();
             }
         }
     }

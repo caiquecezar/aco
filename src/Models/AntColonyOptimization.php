@@ -3,13 +3,10 @@
 namespace Aco\Models;
 
 use Aco\Exceptions\SolutionNotFoundException;
+use Aco\Models\Components\Factories\SolutionFactory;
 use Aco\Models\Components\Context;
 
-/**
- * This is an abstract class. 
- * It has methods that are specific for each problem.
- */
-abstract class AntColonyOptimization
+class AntColonyOptimization
 {
     private Context $context;
 
@@ -21,16 +18,16 @@ abstract class AntColonyOptimization
     /**
      * Solution concrete class to be used in algorithm
      */
-    private Solution $solution;
+    private string $solutionClass;
 
     public function __construct(
         Context $context,
         int $totalAnts,
-        Solution $solution,
+        string $solution,
     ) {
         $this->context = $context;
         $this->totalAnts = $totalAnts;
-        $this->solution = $solution;
+        $this->solutionClass = $solution;
     }
 
     /**
@@ -73,32 +70,22 @@ abstract class AntColonyOptimization
      */
     private function releaseAnt(int $actualPosition = -1): Solution
     {
-        $solution = [];
-        $tempSolution = [];
+        $tempSolution = SolutionFactory::createSolution($this->solutionClass);
         $visited = [];
 
         do {
-            $solution = $tempSolution;
             $nextNodeToVisit = $this->context->getNextNode($actualPosition, $visited);
             
             if (!$nextNodeToVisit) {
                 break;
             }
             
+            $tempSolution->addPartialSolution($nextNodeToVisit);
+
             $visited[] = $nextNodeToVisit->getId();
-            $tempSolution[] = $nextNodeToVisit;
             $actualPosition = $nextNodeToVisit->getId();
-        } while ($this->verifyStopCondition($tempSolution));
+        } while (!$tempSolution->isValidSolution());
 
-        return $this->solution->buildSolution($solution);
+        return $tempSolution;
     }
-
-    /**
-     * Function to verify the stop condition when building a solution.
-     * This is an abstract function, its implementation is specific for each problem
-     *
-     * @param array $solution The current solution being evaluated (an array of Nodes).
-     * @return bool Whether the stop condition is met or not.
-     */
-    abstract protected function verifyStopCondition(array $solution): bool;
 }
