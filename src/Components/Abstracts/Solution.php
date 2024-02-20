@@ -9,9 +9,6 @@ namespace Aco\Components\Abstracts;
  */
 abstract class Solution
 {
-    /**
-     * Array of Aco\Models\Nodes that build a valid solution. 
-     */
     protected array $nodes;
 
     /**

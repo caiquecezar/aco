@@ -38,19 +38,19 @@ class AntColonyOptimization
      */
     public function run(int $initialPosition = -1): Solution
     {
-        $bestSolution = [];
-        $bestSolutionValue = 0;
+        $bestSolution = null;
+        $bestSolutionValue = null;
 
         for ($i = 0; $i < $this->totalAnts; $i++) {
             $solution = $this->releaseAnt($initialPosition);
             $solutionValue = $solution->calculateObjective();
 
-            if ($solutionValue >= $bestSolutionValue) {
+            if (!$bestSolutionValue || $solutionValue >= $bestSolutionValue) {
                 $bestSolution = $solution;
                 $bestSolutionValue = $solutionValue;
             }
 
-            $this->context->updatePathsPheromone($solution->getNodes(), $solutionValue);
+            $this->context->updatePathsPheromone($solution);
         }
 
         if (!$bestSolution) {

@@ -3,6 +3,7 @@
 namespace Aco\Components\Collections;
 
 use Aco\Components\Abstracts\Node;
+use Aco\Components\Abstracts\Solution;
 use Aco\Components\Path;
 use Aco\Exceptions\NextNodeNotFoundException;
 use Aco\Utils\Traits\CheckPaths;
@@ -72,18 +73,20 @@ class EdgeCollection
     /**
      * Updates the pheromone levels along the paths according to the given solution value.
      * 
-     * @param array $solution The solution path.
-     * @param float $solutionValue The value of the solution.
+     * @param Solution $solution The solution.
      * @return void
      */
-    public function updatePheromone(array $solution, float $solutionValue): void
+    public function updatePheromone(Solution $solution): void
     {
-        for ($i = 0; $i < sizeOf($solution) - 1; $i++) {
+        $solutionNodes = $solution->getNodes();
+        $solutionValue = $solution->calculateObjective();
+
+        for ($i = 0; $i < sizeOf($solutionNodes) - 1; $i++) {
             /** @var Node $initialNode */
-            $initialNode = $solution[$i];
+            $initialNode = $solutionNodes[$i];
 
             /** @var Node $finalNode */
-            $finalNode = $solution[$i + 1];
+            $finalNode = $solutionNodes[$i + 1];
 
             $initialNodeId = $initialNode->getId();
             $finalNodeId = $finalNode->getId();

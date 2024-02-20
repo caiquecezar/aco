@@ -3,6 +3,7 @@
 namespace Aco\Components;
 
 use Aco\Components\Abstracts\Node;
+use Aco\Components\Abstracts\Solution;
 use Aco\Components\Collections\EdgeCollection;
 use Aco\Components\Collections\NodeCollection;
 
@@ -52,12 +53,11 @@ class Context
     /**
      * Update the pheromone levels of the paths based on the given solution.
      *
-     * @param array $solution An array representing the solution found by the ant.
-     * @param float $solutionValue The value of the solution.
+     * @param Solution $solution The solution found by the ant.
      * @return void
      */
-    public function updatePathsPheromone(array $solution, float $solutionValue): void
+    public function updatePathsPheromone(Solution $solution): void
     {
-        $this->edges->updatePheromone($solution, $solutionValue);
+        $this->edges->updatePheromone($solution);
     }
 }
