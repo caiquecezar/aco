@@ -53,7 +53,7 @@ class ContextBuilderTest extends TestCase
             ->addSolution('SolutionClass');
 
         $reflectionBuilder = new ReflectionClass('CaiqueCezar\Aco\Components\Builders\ContextBuilder');
-        $reflectionPaths = $reflectionBuilder->getProperty('edges');
+        $reflectionPaths = $reflectionBuilder->getProperty('paths');
         $reflectionPaths->setAccessible(true);
 
         $paths = $reflectionPaths->getValue($builder);
@@ -66,24 +66,24 @@ class ContextBuilderTest extends TestCase
 
     public function testAddPaths()
     {
-        $edges = new PathCollection([]);
-        $builder = ContextBuilder::builder()->addPaths($edges);
+        $paths = new PathCollection([]);
+        $builder = ContextBuilder::builder()->addPaths($paths);
 
         $reflectionBuilder = new ReflectionClass('CaiqueCezar\Aco\Components\Builders\ContextBuilder');
-        $reflectionPaths = $reflectionBuilder->getProperty('edges');
+        $reflectionPaths = $reflectionBuilder->getProperty('paths');
         $reflectionPaths->setAccessible(true);
 
-        $this->assertSame($edges, $reflectionPaths->getValue($builder));
+        $this->assertSame($paths, $reflectionPaths->getValue($builder));
         $this->assertInstanceOf(PathCollection::class, $reflectionPaths->getValue($builder));
     }
 
     public function testAddPathsFromArray()
     {
-        $edges = [new Path(1, 2, $this->createMock(Pheromone::class))];
-        $builder = ContextBuilder::builder()->addPathsFromArray($edges);
+        $paths = [new Path(1, 2, $this->createMock(Pheromone::class))];
+        $builder = ContextBuilder::builder()->addPathsFromArray($paths);
 
         $reflectionBuilder = new ReflectionClass('CaiqueCezar\Aco\Components\Builders\ContextBuilder');
-        $reflectionPaths = $reflectionBuilder->getProperty('edges');
+        $reflectionPaths = $reflectionBuilder->getProperty('paths');
         $reflectionPaths->setAccessible(true);
 
         $this->assertInstanceOf(PathCollection::class, $reflectionPaths->getValue($builder));

@@ -10,20 +10,20 @@ use CaiqueCezar\Aco\Components\Factories\SolutionFactory;
 class Context
 {
     private NodeCollection $nodes;
-    private PathCollection $edges;
+    private PathCollection $paths;
     private string $solutionClass;
 
     /**
      * Context constructor.
      *
      * @param NodeCollection $nodes Collection of nodes in the context.
-     * @param PathCollection $edges Collection of edges in the context.
+     * @param PathCollection $paths Collection of paths in the context.
      * @param string $solutionClass string with an implementation of Solution class.
      */
-    public function __construct(NodeCollection $nodes, PathCollection $edges, string $solutionClass)
+    public function __construct(NodeCollection $nodes, PathCollection $paths, string $solutionClass)
     {
         $this->nodes = $nodes;
-        $this->edges = $edges;
+        $this->paths = $paths;
         $this->solutionClass = $solutionClass;
     }
 
@@ -52,7 +52,7 @@ class Context
                 return $tempSolution;
             }
 
-            $nodeId = $this->edges->findNextNodeFollowingPheromone($currentNodeId, $notVisitedNodes);
+            $nodeId = $this->paths->findNextNodeFollowingPheromone($currentNodeId, $notVisitedNodes);
             $nextNodeToVisit = $this->nodes->getNodeById($nodeId);
             $tempSolution->addPartialSolution($nextNodeToVisit);
 
@@ -71,6 +71,6 @@ class Context
      */
     public function updatePathsPheromone(Solution $solution): void
     {
-        $this->edges->updatePheromone($solution);
+        $this->paths->updatePheromone($solution);
     }
 }

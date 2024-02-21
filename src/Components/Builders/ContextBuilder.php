@@ -17,7 +17,7 @@ class ContextBuilder
     use CheckNodes;
 
     private ?NodeCollection $nodes = null;
-    private ?PathCollection $edges = null;
+    private ?PathCollection $paths = null;
     private ?string $solutionClass = null;
 
     /**
@@ -88,7 +88,7 @@ class ContextBuilder
             }
         }
 
-        $this->edges = new PathCollection($paths);
+        $this->paths = new PathCollection($paths);
 
         return $this;
     }
@@ -96,12 +96,12 @@ class ContextBuilder
     /**
      * Adds an PathCollection to the builder.
      *
-     * @param PathCollection $edges The PathCollection to add.
+     * @param PathCollection $paths The PathCollection to add.
      * @return ContextBuilder The updated ContextBuilder.
      */
-    public function addPaths(PathCollection $edges): ContextBuilder
+    public function addPaths(PathCollection $paths): ContextBuilder
     {
-        $this->edges = $edges;
+        $this->paths = $paths;
 
         return $this;
     }
@@ -114,13 +114,13 @@ class ContextBuilder
      */
     public function addPathsFromArray(array $paths): ContextBuilder
     {
-        $this->edges = new PathCollection($paths);
+        $this->paths = new PathCollection($paths);
 
         return $this;
     }
 
     /**
-     * Builds the Context object using the provided nodes and edges.
+     * Builds the Context object using the provided nodes and paths.
      *
      * @return Context The built Context object.
      * @throws ContextNodesNotFoundException If nodes are not provided.
@@ -132,7 +132,7 @@ class ContextBuilder
             throw new ContextNodesNotFoundException();
         }
 
-        if (!$this->edges) {
+        if (!$this->paths) {
             throw new ContextPathsNotFoundException();
         }
 
@@ -140,7 +140,7 @@ class ContextBuilder
             throw new ContextSolutionClassNotFoundException();
         }
 
-        return new Context($this->nodes, $this->edges, $this->solutionClass);
+        return new Context($this->nodes, $this->paths, $this->solutionClass);
     }
 
     /**
