@@ -40,6 +40,19 @@ class PathCollectionTest extends TestCase
         $this->assertFalse($notFoundPath);
     }
 
+    public function testFindPathReverse()
+    {
+        $pheromone = $this->createMock(Pheromone::class);
+
+        $path1 = new Path(1, 2, $pheromone);
+        $path2 = new Path(2, 3, $pheromone);
+        $paths = [$path1, $path2];
+        $edgeCollection = new PathCollection($paths);
+
+        $foundPath = $edgeCollection->findPath(2, 1);
+        $this->assertEquals($path1, $foundPath);
+    }
+
     public function testUpdatePheromone()
     {
         $pheromone1 = new PheromoneImpl(10, 0.1);

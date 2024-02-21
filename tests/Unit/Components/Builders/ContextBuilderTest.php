@@ -11,8 +11,10 @@ use CaiqueCezar\Aco\Exceptions\ContextNodesNotFoundException;
 use CaiqueCezar\Aco\Exceptions\ContextPathsNotFoundException;
 use CaiqueCezar\Aco\Exceptions\ContextSolutionClassNotFoundException;
 use CaiqueCezar\Aco\Components\Abstracts\Node;
+use CaiqueCezar\Aco\Components\Context;
 use CaiqueCezar\Aco\Components\Path;
 use ReflectionClass;
+use Tests\Utils\Concretes\Default\NodeImpl;
 
 class ContextBuilderTest extends TestCase
 {
@@ -44,11 +46,12 @@ class ContextBuilderTest extends TestCase
     {
         $pheromone = $this->createMock(Pheromone::class);
         $pheromone->method('getInitialPheromone')->willReturn(10);
-
+        $node1 = new NodeImpl(1);
+        $node2 = new NodeImpl(2);
         $builder = ContextBuilder::builder()
             ->addNodesFromArray([
-                $this->getMockForAbstractClass(Node::class), 
-                $this->getMockForAbstractClass(Node::class)
+                $node1,
+                $node2
             ])->createPaths($pheromone)
             ->addSolution('SolutionClass');
 
@@ -61,7 +64,7 @@ class ContextBuilderTest extends TestCase
 
         $this->assertInstanceOf(PathCollection::class, $paths);
 
-        $this->assertEquals(10, $arrayPaths[0]->getPheromone());
+        $this->assertEquals(10, $arrayPaths[$node1->getId()][$node2->getId()]->getPheromone());
     }
 
     public function testAddPaths()
@@ -134,5 +137,22 @@ class ContextBuilderTest extends TestCase
         foreach ($nodesWithAdjList as $node) {
             $this->assertCount(2, $node->getAdjList());
         }
+    }
+
+    public function testContextBuilderCreatesAContextInstance()
+    {
+        $pheromone = $this->createMock(Pheromone::class);
+        $pheromone->method('getInitialPheromone')->willReturn(10);
+        $node1 = new NodeImpl(1);
+        $node2 = new NodeImpl(2);
+        $context = ContextBuilder::builder()
+            ->addNodesFromArray([
+                $node1,
+                $node2
+            ])->createPaths($pheromone)
+            ->addSolution('SolutionClass')
+            ->build();
+
+        $this->assertInstanceOf(Context::class, $context);
     }
 }
