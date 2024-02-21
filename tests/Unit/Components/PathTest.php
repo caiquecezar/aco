@@ -30,34 +30,6 @@ class PathTest extends TestCase
         $this->assertEquals($expectedPheromone, $path->getPheromone());
     }
 
-    public function testIsCurrentPathMethodReturnsTrueForMatchingNodes()
-    {
-        $initialNode = 1;
-        $finalNode = 2;
-
-        $pheromoneMock = $this->createMock(Pheromone::class);
-
-        $path = new Path($initialNode, $finalNode, $pheromoneMock);
-        $isCurrentPath = $path->isCurrentPath($initialNode, $finalNode);
-
-        $this->assertTrue($isCurrentPath);
-    }
-
-    public function testIsCurrentPathMethodReturnsFalseForNonMatchingNodes()
-    {
-        $initialNode = 1;
-        $finalNode = 2;
-        $otherInitialNode = 3;
-        $otherFinalNode = 4;
-
-        $pheromoneMock = $this->createMock(Pheromone::class);
-
-        $path = new Path($initialNode, $finalNode, $pheromoneMock);
-        $isCurrentPath = $path->isCurrentPath($otherInitialNode, $otherFinalNode);
-
-        $this->assertFalse($isCurrentPath);
-    }
-
     public function testIncreasePheromoneMethodIncreasesPheromoneCorrectly()
     {
         $initialPheromone = 100;

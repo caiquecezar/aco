@@ -12,6 +12,11 @@ class PathCollection
 {
     use CheckPaths;
 
+    /**
+     * A mapped variable with the paths represented by an matrix
+     * 
+     * $this->paths[initialNode][finalNode] represents one Path
+     */
     private array $paths;
 
     /**
@@ -36,7 +41,7 @@ class PathCollection
      */
     public function addPath(Path $path): void
     {
-        $this->paths[] = $path;
+        $this->paths[$path->getInitialNode()][$path->getFinalNode()] = $path;
     }
 
     /**
@@ -58,13 +63,12 @@ class PathCollection
      */
     public function findPath(int $initialNodeId, int $finalNodeId): Path|false
     {
-        foreach ($this->paths as $path) {
-            /** @var Path $path*/
-            $pathSearched = $path->isCurrentPath($initialNodeId, $finalNodeId) || $path->isCurrentPath($finalNodeId, $initialNodeId);
+        if (!empty($this->paths[$initialNodeId][$finalNodeId])) {
+            return $this->paths[$initialNodeId][$finalNodeId];
+        }
 
-            if ($pathSearched) {
-                return $path;
-            }
+        if (!empty($this->paths[$finalNodeId][$initialNodeId])) {
+            return $this->paths[$finalNodeId][$initialNodeId];
         }
 
         return false;
@@ -91,19 +95,16 @@ class PathCollection
             $initialNodeId = $initialNode->getId();
             $finalNodeId = $finalNode->getId();
 
-            foreach ($this->paths as $path) {
-                /** @var Path $path */
-                $pathShouldIncreasePheromone = $path->isCurrentPath($initialNodeId, $finalNodeId) || $path->isCurrentPath($finalNodeId, $initialNodeId);
+            $path = $this->findPath($initialNodeId, $finalNodeId);
 
-                if ($pathShouldIncreasePheromone) {
-                    $path->increasePheromone($solutionValue);
-                }
-            }
+            $path->increasePheromone($solutionValue);
         }
 
-        foreach ($this->paths as $path) {
-            /** @var Path $path */
-            $path->evapore();
+        foreach ($this->paths as $pathsLine) {
+            foreach ($pathsLine as $path) {
+                /** @var Path $path */
+                $path->evapore();
+            }
         }
     }
 

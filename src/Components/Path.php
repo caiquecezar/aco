@@ -29,6 +29,16 @@ class Path
         $this->currentPheromone = $this->pheromone->getInitialPheromone();
     }
 
+    public function getInitialNode(): int
+    {
+        return $this->initialNode;
+    }
+
+    public function getFinalNode(): int
+    {
+        return $this->finalNode;
+    }
+
     /**
      * Evaporates the pheromone along the path.
      * 
@@ -39,18 +49,6 @@ class Path
         $decrease = (int) floor($this->currentPheromone * $this->pheromone->getEvaporationFee());
 
         $this->currentPheromone = max($this->currentPheromone - $decrease, 1);
-    }
-
-    /**
-     * Checks if the current path is built from the specified initial and final nodes.
-     * 
-     * @param int $initialNode The ID of the initial node of the path.
-     * @param int $finalNode The ID of the final node of the path.
-     * @return bool Returns true if the current path matches the specified initial and final nodes, false otherwise.
-     */
-    public function isCurrentPath(int $initialNode, int $finalNode): bool
-    {
-        return $this->initialNode === $initialNode && $this->finalNode === $finalNode;
     }
 
     /**
