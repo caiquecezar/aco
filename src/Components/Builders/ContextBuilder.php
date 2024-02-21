@@ -3,7 +3,7 @@
 namespace CaiqueCezar\Aco\Components\Builders;
 
 use CaiqueCezar\Aco\Components\Abstracts\Pheromone;
-use CaiqueCezar\Aco\Components\Collections\EdgeCollection;
+use CaiqueCezar\Aco\Components\Collections\PathCollection;
 use CaiqueCezar\Aco\Components\Collections\NodeCollection;
 use CaiqueCezar\Aco\Components\Context;
 use CaiqueCezar\Aco\Components\Path;
@@ -17,7 +17,7 @@ class ContextBuilder
     use CheckNodes;
 
     private ?NodeCollection $nodes = null;
-    private ?EdgeCollection $edges = null;
+    private ?PathCollection $edges = null;
     private ?string $solutionClass = null;
 
     /**
@@ -88,18 +88,18 @@ class ContextBuilder
             }
         }
 
-        $this->edges = new EdgeCollection($paths);
+        $this->edges = new PathCollection($paths);
 
         return $this;
     }
 
     /**
-     * Adds an EdgeCollection to the builder.
+     * Adds an PathCollection to the builder.
      *
-     * @param EdgeCollection $edges The EdgeCollection to add.
+     * @param PathCollection $edges The PathCollection to add.
      * @return ContextBuilder The updated ContextBuilder.
      */
-    public function addPaths(EdgeCollection $edges): ContextBuilder
+    public function addPaths(PathCollection $edges): ContextBuilder
     {
         $this->edges = $edges;
 
@@ -114,7 +114,7 @@ class ContextBuilder
      */
     public function addPathsFromArray(array $paths): ContextBuilder
     {
-        $this->edges = new EdgeCollection($paths);
+        $this->edges = new PathCollection($paths);
 
         return $this;
     }

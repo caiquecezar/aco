@@ -3,24 +3,24 @@
 namespace CaiqueCezar\Aco\Components;
 
 use CaiqueCezar\Aco\Components\Abstracts\Solution;
-use CaiqueCezar\Aco\Components\Collections\EdgeCollection;
+use CaiqueCezar\Aco\Components\Collections\PathCollection;
 use CaiqueCezar\Aco\Components\Collections\NodeCollection;
 use CaiqueCezar\Aco\Components\Factories\SolutionFactory;
 
 class Context
 {
     private NodeCollection $nodes;
-    private EdgeCollection $edges;
+    private PathCollection $edges;
     private string $solutionClass;
 
     /**
      * Context constructor.
      *
      * @param NodeCollection $nodes Collection of nodes in the context.
-     * @param EdgeCollection $edges Collection of edges in the context.
+     * @param PathCollection $edges Collection of edges in the context.
      * @param string $solutionClass string with an implementation of Solution class.
      */
-    public function __construct(NodeCollection $nodes, EdgeCollection $edges, string $solutionClass)
+    public function __construct(NodeCollection $nodes, PathCollection $edges, string $solutionClass)
     {
         $this->nodes = $nodes;
         $this->edges = $edges;

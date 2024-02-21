@@ -5,7 +5,7 @@ namespace Tests\Aco\Components\Builders;
 use PHPUnit\Framework\TestCase;
 use CaiqueCezar\Aco\Components\Builders\ContextBuilder;
 use CaiqueCezar\Aco\Components\Collections\NodeCollection;
-use CaiqueCezar\Aco\Components\Collections\EdgeCollection;
+use CaiqueCezar\Aco\Components\Collections\PathCollection;
 use CaiqueCezar\Aco\Components\Abstracts\Pheromone;
 use CaiqueCezar\Aco\Exceptions\ContextNodesNotFoundException;
 use CaiqueCezar\Aco\Exceptions\ContextPathsNotFoundException;
@@ -59,14 +59,14 @@ class ContextBuilderTest extends TestCase
         $paths = $reflectionPaths->getValue($builder);
         $arrayPaths = $paths->getPaths();
 
-        $this->assertInstanceOf(EdgeCollection::class, $paths);
+        $this->assertInstanceOf(PathCollection::class, $paths);
 
         $this->assertEquals(10, $arrayPaths[0]->getPheromone());
     }
 
     public function testAddPaths()
     {
-        $edges = new EdgeCollection([]);
+        $edges = new PathCollection([]);
         $builder = ContextBuilder::builder()->addPaths($edges);
 
         $reflectionBuilder = new ReflectionClass('CaiqueCezar\Aco\Components\Builders\ContextBuilder');
@@ -74,7 +74,7 @@ class ContextBuilderTest extends TestCase
         $reflectionPaths->setAccessible(true);
 
         $this->assertSame($edges, $reflectionPaths->getValue($builder));
-        $this->assertInstanceOf(EdgeCollection::class, $reflectionPaths->getValue($builder));
+        $this->assertInstanceOf(PathCollection::class, $reflectionPaths->getValue($builder));
     }
 
     public function testAddPathsFromArray()
@@ -86,7 +86,7 @@ class ContextBuilderTest extends TestCase
         $reflectionPaths = $reflectionBuilder->getProperty('edges');
         $reflectionPaths->setAccessible(true);
 
-        $this->assertInstanceOf(EdgeCollection::class, $reflectionPaths->getValue($builder));
+        $this->assertInstanceOf(PathCollection::class, $reflectionPaths->getValue($builder));
     }
 
     public function testBuildThrowsExceptionIfNodesNotProvided()

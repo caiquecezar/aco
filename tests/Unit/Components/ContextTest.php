@@ -5,7 +5,7 @@ namespace Tests\Aco\Components;
 use PHPUnit\Framework\TestCase;
 use CaiqueCezar\Aco\Components\Context;
 use CaiqueCezar\Aco\Components\Collections\NodeCollection;
-use CaiqueCezar\Aco\Components\Collections\EdgeCollection;
+use CaiqueCezar\Aco\Components\Collections\PathCollection;
 use CaiqueCezar\Aco\Components\Abstracts\Solution;
 use Tests\Utils\Concretes\Default\NodeImpl;
 use Tests\Utils\Concretes\Default\SolutionImpl;
@@ -26,7 +26,7 @@ class ContextTest extends TestCase
             ->with(-1)
             ->willReturnOnConsecutiveCalls($nodeMock);
 
-        $edgeCollectionMock = $this->createMock(EdgeCollection::class);
+        $edgeCollectionMock = $this->createMock(PathCollection::class);
 
         $context = new Context($nodeCollectionMock, $edgeCollectionMock, SolutionImpl::class);
 
@@ -56,7 +56,7 @@ class ContextTest extends TestCase
             ->with(1, [1])
             ->willReturnOnConsecutiveCalls([2]);
 
-        $edgeCollectionMock = $this->createMock(EdgeCollection::class);
+        $edgeCollectionMock = $this->createMock(PathCollection::class);
         $edgeCollectionMock->expects($this->once())
             ->method('findNextNodeFollowingPheromone')
             ->with(1, [2])
@@ -85,7 +85,7 @@ class ContextTest extends TestCase
             ->with(1, [1])
             ->willReturnOnConsecutiveCalls([]);
 
-        $edgeCollectionMock = $this->createMock(EdgeCollection::class);
+        $edgeCollectionMock = $this->createMock(PathCollection::class);
 
         $context = new Context($nodeCollectionMock, $edgeCollectionMock, SolutionImpl2Nodes::class);
 
@@ -99,7 +99,7 @@ class ContextTest extends TestCase
     {
         $nodeCollectionMock = $this->createMock(NodeCollection::class);
 
-        $edgeCollectionMock = $this->createMock(EdgeCollection::class);
+        $edgeCollectionMock = $this->createMock(PathCollection::class);
 
         $solutionMock = $this->createMock(Solution::class);
 

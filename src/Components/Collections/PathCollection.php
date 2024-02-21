@@ -8,16 +8,16 @@ use CaiqueCezar\Aco\Components\Path;
 use CaiqueCezar\Aco\Exceptions\NextNodeNotFoundException;
 use CaiqueCezar\Aco\Utils\Traits\CheckPaths;
 
-class EdgeCollection
+class PathCollection
 {
     use CheckPaths;
 
     private array $paths;
 
     /**
-     * EdgeCollection constructor.
+     * PathCollection constructor.
      *
-     * @param array $paths An array of paths to initialize the EdgeCollection.
+     * @param array $paths An array of paths to initialize the PathCollection.
      */
     public function __construct(array $paths)
     {
