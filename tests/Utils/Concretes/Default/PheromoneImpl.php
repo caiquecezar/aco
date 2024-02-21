@@ -2,7 +2,7 @@
 
 namespace Tests\Utils\Concretes\Default;
 
-use Aco\Components\Abstracts\Pheromone;
+use CaiqueCezar\Aco\Components\Abstracts\Pheromone;
 
 class PheromoneImpl extends Pheromone
 {

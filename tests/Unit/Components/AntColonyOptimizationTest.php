@@ -2,11 +2,11 @@
 
 namespace Tests\Components;
 
-use Aco\Components\Abstracts\Solution;
+use CaiqueCezar\Aco\Components\Abstracts\Solution;
 use PHPUnit\Framework\TestCase;
-use Aco\Components\AntColonyOptimization;
-use Aco\Components\Context;
-use Aco\Exceptions\SolutionNotFoundException;
+use CaiqueCezar\Aco\Components\AntColonyOptimization;
+use CaiqueCezar\Aco\Components\Context;
+use CaiqueCezar\Aco\Exceptions\SolutionNotFoundException;
 
 class AntColonyOptimizationTest extends TestCase
 {

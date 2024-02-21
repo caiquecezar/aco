@@ -2,7 +2,7 @@
 
 namespace Tests\Utils\Concretes\Solutions;
 
-use Aco\Components\Abstracts\Solution;
+use CaiqueCezar\Aco\Components\Abstracts\Solution;
 
 class SolutionImpl2Nodes extends Solution
 {

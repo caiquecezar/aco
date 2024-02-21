@@ -1,10 +1,10 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Aco\Components\Collections\EdgeCollection;
-use Aco\Components\Path;
-use Aco\Exceptions\NextNodeNotFoundException;
-use Aco\Components\Abstracts\Pheromone;
+use CaiqueCezar\Aco\Components\Collections\EdgeCollection;
+use CaiqueCezar\Aco\Components\Path;
+use CaiqueCezar\Aco\Exceptions\NextNodeNotFoundException;
+use CaiqueCezar\Aco\Components\Abstracts\Pheromone;
 use Tests\Utils\Concretes\Default\NodeImpl;
 use Tests\Utils\Concretes\Default\PheromoneImpl;
 use Tests\Utils\Concretes\Default\SolutionImpl;

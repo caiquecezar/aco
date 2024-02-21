@@ -1,6 +1,6 @@
 <?php
 
-namespace Aco\Exceptions;
+namespace CaiqueCezar\Aco\Exceptions;
 
 use Exception;
 

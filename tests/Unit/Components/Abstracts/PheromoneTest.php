@@ -3,7 +3,7 @@
 namespace Tests\Aco\Components\Abstracts;
 
 use PHPUnit\Framework\TestCase;
-use Aco\Components\Abstracts\Pheromone;
+use CaiqueCezar\Aco\Components\Abstracts\Pheromone;
 
 class PheromoneTest extends TestCase
 {

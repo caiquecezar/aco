@@ -3,8 +3,8 @@
 namespace Tests\Aco\Components;
 
 use PHPUnit\Framework\TestCase;
-use Aco\Components\Path;
-use Aco\Components\Abstracts\Pheromone;
+use CaiqueCezar\Aco\Components\Path;
+use CaiqueCezar\Aco\Components\Abstracts\Pheromone;
 
 class PathTest extends TestCase
 {

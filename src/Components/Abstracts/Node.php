@@ -1,8 +1,8 @@
 <?php
 
-namespace Aco\Components\Abstracts;
+namespace CaiqueCezar\Aco\Components\Abstracts;
 
-use Aco\Utils\AutoIncrement;
+use CaiqueCezar\Aco\Utils\AutoIncrement;
 
 /**
  * This is an abstract class representing a node in a graph.

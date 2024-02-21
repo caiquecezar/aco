@@ -3,8 +3,8 @@
 namespace Tests\Aco\Components\Abstracts;
 
 use PHPUnit\Framework\TestCase;
-use Aco\Components\Abstracts\Solution;
-use Aco\Components\Abstracts\Node;
+use CaiqueCezar\Aco\Components\Abstracts\Solution;
+use CaiqueCezar\Aco\Components\Abstracts\Node;
 
 class SolutionTest extends TestCase
 {

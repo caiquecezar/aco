@@ -1,16 +1,16 @@
 <?php
 
-namespace Aco\Components\Builders;
+namespace CaiqueCezar\Aco\Components\Builders;
 
-use Aco\Components\Abstracts\Pheromone;
-use Aco\Components\Collections\EdgeCollection;
-use Aco\Components\Collections\NodeCollection;
-use Aco\Components\Context;
-use Aco\Components\Path;
-use Aco\Exceptions\ContextNodesNotFoundException;
-use Aco\Exceptions\ContextPathsNotFoundException;
-use Aco\Exceptions\ContextSolutionClassNotFoundException;
-use Aco\Utils\Traits\CheckNodes;
+use CaiqueCezar\Aco\Components\Abstracts\Pheromone;
+use CaiqueCezar\Aco\Components\Collections\EdgeCollection;
+use CaiqueCezar\Aco\Components\Collections\NodeCollection;
+use CaiqueCezar\Aco\Components\Context;
+use CaiqueCezar\Aco\Components\Path;
+use CaiqueCezar\Aco\Exceptions\ContextNodesNotFoundException;
+use CaiqueCezar\Aco\Exceptions\ContextPathsNotFoundException;
+use CaiqueCezar\Aco\Exceptions\ContextSolutionClassNotFoundException;
+use CaiqueCezar\Aco\Utils\Traits\CheckNodes;
 
 class ContextBuilder
 {

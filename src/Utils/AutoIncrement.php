@@ -1,6 +1,6 @@
 <?php
 
-namespace Aco\Utils;
+namespace CaiqueCezar\Aco\Utils;
 
 class AutoIncrement
 {

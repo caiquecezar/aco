@@ -1,8 +1,8 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Aco\Components\Factories\SolutionFactory;
-use Aco\Exceptions\ClassIsNotASolutionInstanceException;
+use CaiqueCezar\Aco\Components\Factories\SolutionFactory;
+use CaiqueCezar\Aco\Exceptions\ClassIsNotASolutionInstanceException;
 use Tests\Utils\Concretes\Default\SolutionImpl;
 
 class SolutionFactoryTest extends TestCase

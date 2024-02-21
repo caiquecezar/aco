@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Aco\Components\Collections\NodeCollection;
+use CaiqueCezar\Aco\Components\Collections\NodeCollection;
 use Tests\Utils\Concretes\Default\NodeImpl;
 
 class NodeCollectionTest extends TestCase

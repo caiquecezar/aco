@@ -2,7 +2,7 @@
 
 namespace Tests\Utils\Concretes\Default;
 
-use Aco\Components\Abstracts\Solution;
+use CaiqueCezar\Aco\Components\Abstracts\Solution;
 
 class SolutionImpl extends Solution
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Aco\Components;
+namespace CaiqueCezar\Aco\Components;
 
-use Aco\Components\Abstracts\Solution;
-use Aco\Exceptions\SolutionNotFoundException;
+use CaiqueCezar\Aco\Components\Abstracts\Solution;
+use CaiqueCezar\Aco\Exceptions\SolutionNotFoundException;
 
 class AntColonyOptimization
 {

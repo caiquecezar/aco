@@ -1,9 +1,9 @@
 <?php
 
-namespace Aco\Utils\Traits;
+namespace CaiqueCezar\Aco\Utils\Traits;
 
-use Aco\Components\Path;
-use Aco\Exceptions\VariableIsNotAPathException;
+use CaiqueCezar\Aco\Components\Path;
+use CaiqueCezar\Aco\Exceptions\VariableIsNotAPathException;
 
 trait CheckPaths
 {

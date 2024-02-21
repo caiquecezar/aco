@@ -1,10 +1,10 @@
 <?php
 
-namespace Aco\Components\Factories;
+namespace CaiqueCezar\Aco\Components\Factories;
 
-use Aco\Components\Abstracts\Solution;
-use Aco\Exceptions\ClassIsNotASolutionInstanceException;
-use Aco\Exceptions\InvalidSolutionTypeException;
+use CaiqueCezar\Aco\Components\Abstracts\Solution;
+use CaiqueCezar\Aco\Exceptions\ClassIsNotASolutionInstanceException;
+use CaiqueCezar\Aco\Exceptions\InvalidSolutionTypeException;
 
 class SolutionFactory
 {

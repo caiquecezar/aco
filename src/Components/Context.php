@@ -1,11 +1,11 @@
 <?php
 
-namespace Aco\Components;
+namespace CaiqueCezar\Aco\Components;
 
-use Aco\Components\Abstracts\Solution;
-use Aco\Components\Collections\EdgeCollection;
-use Aco\Components\Collections\NodeCollection;
-use Aco\Components\Factories\SolutionFactory;
+use CaiqueCezar\Aco\Components\Abstracts\Solution;
+use CaiqueCezar\Aco\Components\Collections\EdgeCollection;
+use CaiqueCezar\Aco\Components\Collections\NodeCollection;
+use CaiqueCezar\Aco\Components\Factories\SolutionFactory;
 
 class Context
 {

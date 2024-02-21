@@ -3,8 +3,8 @@
 namespace Tests\Aco\Components\Abstracts;
 
 use PHPUnit\Framework\TestCase;
-use Aco\Components\Abstracts\Node;
-use Aco\Utils\AutoIncrement;
+use CaiqueCezar\Aco\Components\Abstracts\Node;
+use CaiqueCezar\Aco\Utils\AutoIncrement;
 
 class NodeTest extends TestCase
 {

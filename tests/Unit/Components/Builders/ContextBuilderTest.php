@@ -3,15 +3,15 @@
 namespace Tests\Aco\Components\Builders;
 
 use PHPUnit\Framework\TestCase;
-use Aco\Components\Builders\ContextBuilder;
-use Aco\Components\Collections\NodeCollection;
-use Aco\Components\Collections\EdgeCollection;
-use Aco\Components\Abstracts\Pheromone;
-use Aco\Exceptions\ContextNodesNotFoundException;
-use Aco\Exceptions\ContextPathsNotFoundException;
-use Aco\Exceptions\ContextSolutionClassNotFoundException;
-use Aco\Components\Abstracts\Node;
-use Aco\Components\Path;
+use CaiqueCezar\Aco\Components\Builders\ContextBuilder;
+use CaiqueCezar\Aco\Components\Collections\NodeCollection;
+use CaiqueCezar\Aco\Components\Collections\EdgeCollection;
+use CaiqueCezar\Aco\Components\Abstracts\Pheromone;
+use CaiqueCezar\Aco\Exceptions\ContextNodesNotFoundException;
+use CaiqueCezar\Aco\Exceptions\ContextPathsNotFoundException;
+use CaiqueCezar\Aco\Exceptions\ContextSolutionClassNotFoundException;
+use CaiqueCezar\Aco\Components\Abstracts\Node;
+use CaiqueCezar\Aco\Components\Path;
 use ReflectionClass;
 
 class ContextBuilderTest extends TestCase
@@ -21,7 +21,7 @@ class ContextBuilderTest extends TestCase
         $nodes = new NodeCollection([]);
         $builder = ContextBuilder::builder()->addNodes($nodes);
 
-        $reflectionBuilder = new ReflectionClass('Aco\Components\Builders\ContextBuilder');
+        $reflectionBuilder = new ReflectionClass('CaiqueCezar\Aco\Components\Builders\ContextBuilder');
         $reflectionNodes = $reflectionBuilder->getProperty('nodes');
         $reflectionNodes->setAccessible(true);
 
@@ -33,7 +33,7 @@ class ContextBuilderTest extends TestCase
         $nodes = [$this->getMockForAbstractClass(Node::class), $this->getMockForAbstractClass(Node::class)];
         $builder = ContextBuilder::builder()->addNodesFromArray($nodes);
 
-        $reflectionBuilder = new ReflectionClass('Aco\Components\Builders\ContextBuilder');
+        $reflectionBuilder = new ReflectionClass('CaiqueCezar\Aco\Components\Builders\ContextBuilder');
         $reflectionNodes = $reflectionBuilder->getProperty('nodes');
         $reflectionNodes->setAccessible(true);
 
@@ -52,7 +52,7 @@ class ContextBuilderTest extends TestCase
             ])->createPaths($pheromone)
             ->addSolution('SolutionClass');
 
-        $reflectionBuilder = new ReflectionClass('Aco\Components\Builders\ContextBuilder');
+        $reflectionBuilder = new ReflectionClass('CaiqueCezar\Aco\Components\Builders\ContextBuilder');
         $reflectionPaths = $reflectionBuilder->getProperty('edges');
         $reflectionPaths->setAccessible(true);
 
@@ -69,7 +69,7 @@ class ContextBuilderTest extends TestCase
         $edges = new EdgeCollection([]);
         $builder = ContextBuilder::builder()->addPaths($edges);
 
-        $reflectionBuilder = new ReflectionClass('Aco\Components\Builders\ContextBuilder');
+        $reflectionBuilder = new ReflectionClass('CaiqueCezar\Aco\Components\Builders\ContextBuilder');
         $reflectionPaths = $reflectionBuilder->getProperty('edges');
         $reflectionPaths->setAccessible(true);
 
@@ -82,7 +82,7 @@ class ContextBuilderTest extends TestCase
         $edges = [new Path(1, 2, $this->createMock(Pheromone::class))];
         $builder = ContextBuilder::builder()->addPathsFromArray($edges);
 
-        $reflectionBuilder = new ReflectionClass('Aco\Components\Builders\ContextBuilder');
+        $reflectionBuilder = new ReflectionClass('CaiqueCezar\Aco\Components\Builders\ContextBuilder');
         $reflectionPaths = $reflectionBuilder->getProperty('edges');
         $reflectionPaths->setAccessible(true);
 
@@ -115,7 +115,7 @@ class ContextBuilderTest extends TestCase
     public function testAddSolution()
     {
         $builder = ContextBuilder::builder()->addSolution('SolutionClass');
-        $reflectionBuilder = new ReflectionClass('Aco\Components\Builders\ContextBuilder');
+        $reflectionBuilder = new ReflectionClass('CaiqueCezar\Aco\Components\Builders\ContextBuilder');
         $reflectionPaths = $reflectionBuilder->getProperty('solutionClass');
         $reflectionPaths->setAccessible(true);
 

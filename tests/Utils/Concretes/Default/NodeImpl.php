@@ -2,7 +2,7 @@
 
 namespace Tests\Utils\Concretes\Default;
 
-use Aco\Components\Abstracts\Node;
+use CaiqueCezar\Aco\Components\Abstracts\Node;
 
 class NodeImpl extends Node
 {

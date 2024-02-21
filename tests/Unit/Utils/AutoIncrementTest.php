@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Aco\Utils\AutoIncrement;
+use CaiqueCezar\Aco\Utils\AutoIncrement;
 
 class AutoIncrementTest extends TestCase
 {

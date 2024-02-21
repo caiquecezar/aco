@@ -1,9 +1,9 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Aco\Utils\Traits\CheckNodes;
-use Aco\Components\Abstracts\Node;
-use Aco\Exceptions\VariableIsNotANodeException;
+use CaiqueCezar\Aco\Utils\Traits\CheckNodes;
+use CaiqueCezar\Aco\Components\Abstracts\Node;
+use CaiqueCezar\Aco\Exceptions\VariableIsNotANodeException;
 
 class CheckNodesTest extends TestCase
 {

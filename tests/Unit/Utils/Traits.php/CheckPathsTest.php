@@ -1,9 +1,9 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Aco\Components\Path;
-use Aco\Exceptions\VariableIsNotAPathException;
-use Aco\Utils\Traits\CheckPaths;
+use CaiqueCezar\Aco\Components\Path;
+use CaiqueCezar\Aco\Exceptions\VariableIsNotAPathException;
+use CaiqueCezar\Aco\Utils\Traits\CheckPaths;
 
 class CheckPathsTest extends TestCase
 {

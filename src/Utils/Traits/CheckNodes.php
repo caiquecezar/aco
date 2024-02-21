@@ -1,9 +1,9 @@
 <?php
 
-namespace Aco\Utils\Traits;
+namespace CaiqueCezar\Aco\Utils\Traits;
 
-use Aco\Components\Abstracts\Node;
-use Aco\Exceptions\VariableIsNotANodeException;
+use CaiqueCezar\Aco\Components\Abstracts\Node;
+use CaiqueCezar\Aco\Exceptions\VariableIsNotANodeException;
 
 trait CheckNodes
 {

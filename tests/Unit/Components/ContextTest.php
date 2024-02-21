@@ -3,10 +3,10 @@
 namespace Tests\Aco\Components;
 
 use PHPUnit\Framework\TestCase;
-use Aco\Components\Context;
-use Aco\Components\Collections\NodeCollection;
-use Aco\Components\Collections\EdgeCollection;
-use Aco\Components\Abstracts\Solution;
+use CaiqueCezar\Aco\Components\Context;
+use CaiqueCezar\Aco\Components\Collections\NodeCollection;
+use CaiqueCezar\Aco\Components\Collections\EdgeCollection;
+use CaiqueCezar\Aco\Components\Abstracts\Solution;
 use Tests\Utils\Concretes\Default\NodeImpl;
 use Tests\Utils\Concretes\Default\SolutionImpl;
 use Tests\Utils\Concretes\Solutions\SolutionImpl2Nodes;

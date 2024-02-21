@@ -1,9 +1,9 @@
 <?php
 
-namespace Aco\Components\Collections;
+namespace CaiqueCezar\Aco\Components\Collections;
 
-use Aco\Components\Abstracts\Node;
-use Aco\Utils\Traits\CheckNodes;
+use CaiqueCezar\Aco\Components\Abstracts\Node;
+use CaiqueCezar\Aco\Utils\Traits\CheckNodes;
 
 class NodeCollection
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Aco\Components\Collections;
+namespace CaiqueCezar\Aco\Components\Collections;
 
-use Aco\Components\Abstracts\Node;
-use Aco\Components\Abstracts\Solution;
-use Aco\Components\Path;
-use Aco\Exceptions\NextNodeNotFoundException;
-use Aco\Utils\Traits\CheckPaths;
+use CaiqueCezar\Aco\Components\Abstracts\Node;
+use CaiqueCezar\Aco\Components\Abstracts\Solution;
+use CaiqueCezar\Aco\Components\Path;
+use CaiqueCezar\Aco\Exceptions\NextNodeNotFoundException;
+use CaiqueCezar\Aco\Utils\Traits\CheckPaths;
 
 class EdgeCollection
 {
