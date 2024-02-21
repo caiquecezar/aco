@@ -12,7 +12,7 @@ This project consists of several classes that implement the essential behavior o
 
 The documentation for the [basic usage](/docs/basic.md).
 
-The documentation for the [advanced usage](/docs/basic.md).
+The documentation for the [advanced usage](/docs/advanced.md).
 
 ## How to contribute
 
