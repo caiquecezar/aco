@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use CaiqueCezar\Aco\Components\Collections\EdgeCollection;
+use CaiqueCezar\Aco\Components\Collections\PathCollection;
 use CaiqueCezar\Aco\Components\Path;
 use CaiqueCezar\Aco\Exceptions\NextNodeNotFoundException;
 use CaiqueCezar\Aco\Components\Abstracts\Pheromone;
@@ -9,12 +9,12 @@ use Tests\Utils\Concretes\Default\NodeImpl;
 use Tests\Utils\Concretes\Default\PheromoneImpl;
 use Tests\Utils\Concretes\Default\SolutionImpl;
 
-class EdgeCollectionTest extends TestCase
+class PathCollectionTest extends TestCase
 {
     public function testAddPath()
     {
         $pheromone = $this->createMock(Pheromone::class);
-        $edgeCollection = new EdgeCollection([]);
+        $edgeCollection = new PathCollection([]);
         $path = new Path(1, 2, $pheromone);
         
         $edgeCollection->addPath($path);
@@ -28,7 +28,7 @@ class EdgeCollectionTest extends TestCase
         $path1 = new Path(1, 2, $pheromone);
         $path2 = new Path(2, 3, $pheromone);
         $paths = [$path1, $path2];
-        $edgeCollection = new EdgeCollection($paths);
+        $edgeCollection = new PathCollection($paths);
 
         $foundPath = $edgeCollection->findPath(1, 2);
         $this->assertEquals($path1, $foundPath);
@@ -54,7 +54,7 @@ class EdgeCollectionTest extends TestCase
         $path1 = new Path($node1->getId(), $node2->getId(), $pheromone1);
         $path2 = new Path($node2->getId(), $node3->getId(), $pheromone2);
         $paths = [$path1, $path2];
-        $edgeCollection = new EdgeCollection($paths);
+        $edgeCollection = new PathCollection($paths);
 
         $edgeCollection->updatePheromone($solution);
 
@@ -77,7 +77,7 @@ class EdgeCollectionTest extends TestCase
         $path2 = new Path($node1->getId(), $node3->getId(), $pheromone);
         $path3 = new Path($node2->getId(), $node3->getId(), $pheromone);
         $paths = [$path1, $path2, $path3];
-        $edgeCollection = new EdgeCollection($paths);
+        $edgeCollection = new PathCollection($paths);
 
         $nextNode = $edgeCollection->findNextNodeFollowingPheromone(
             $node1->getId(), 
@@ -95,7 +95,7 @@ class EdgeCollectionTest extends TestCase
 
         $path1 = new Path(1, 2, $pheromone);
         $paths = [$path1];
-        $edgeCollection = new EdgeCollection($paths);
+        $edgeCollection = new PathCollection($paths);
 
         $edgeCollection->findNextNodeFollowingPheromone(1, [3, 4]);
     }
