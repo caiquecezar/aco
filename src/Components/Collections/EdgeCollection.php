@@ -56,7 +56,7 @@ class EdgeCollection
      * @param int $finalNode The ID of the final node.
      * @return Path|false The Path object if found, false otherwise.
      */
-    public function findPath(int $initialNodeId, int $finalNodeId): Path
+    public function findPath(int $initialNodeId, int $finalNodeId): Path|false
     {
         foreach ($this->paths as $path) {
             /** @var Path $path*/

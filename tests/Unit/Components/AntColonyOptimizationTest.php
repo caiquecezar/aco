@@ -33,9 +33,6 @@ class AntColonyOptimizationTest extends TestCase
         $this->assertInstanceOf(Solution::class, $aco->run());
     }
 
-    /**
-     * @test
-     */
     public function testRunMethodThrowsExceptionWhenNoSolutionFound()
     {
         $solutionMock = $this->createMock(Solution::class);

@@ -2,7 +2,6 @@
 
 namespace Tests\Aco\Components;
 
-use Aco\Components\Abstracts\Node;
 use PHPUnit\Framework\TestCase;
 use Aco\Components\Context;
 use Aco\Components\Collections\NodeCollection;
