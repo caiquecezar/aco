@@ -22,4 +22,4 @@ Learn [how to contribute](/docs/contribute.md).
 
 The projects below implements this libary, you can use as reference:
 
-- Coming soon!
+- [Basic Implementation](https://github.com/caiquecezar/aco-basic-implementation) [IN PROGRESS]
